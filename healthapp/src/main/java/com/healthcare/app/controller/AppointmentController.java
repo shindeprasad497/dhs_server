@@ -26,16 +26,22 @@ public class AppointmentController {
 	{
 		return appointmentService.getAppointmentById(id);
 	}
-	
-	
+		
 	
 	@PostMapping(value="/book")
 	public AppointmentDTO bookAppointment(@RequestBody AppointmentDTO appointmentDTO) {
 		return appointmentService.bookAppointment(appointmentDTO);
 	}
-	@GetMapping(value="/patientid/{petientId}")
-	public List<AppointmentDTO> getAppointmentByPetientId(@PathVariable Long petientId)
+
+	
+	@GetMapping(value="/patient/{id}")
+	public List<AppointmentDTO> getAppointmentByPetientId(@PathVariable Long id)
 	{
-		return appointmentService.getAppointmentByPetientId(petientId);
+		return appointmentService.getAppointmentByPetientId(id);
+	}
+	@GetMapping(value="/doctor/{id}")
+	public List<AppointmentDTO> getAppointmentByDoctorId(@PathVariable Long id)
+	{
+		return appointmentService.getAppointmentByDoctorId(id);
 	}
 }

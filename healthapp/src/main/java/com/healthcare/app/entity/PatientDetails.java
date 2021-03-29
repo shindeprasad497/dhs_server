@@ -145,7 +145,9 @@ public class PatientDetails {
 
 	public PatientDetailsDTO toDto(PatientDetails patientDetails) {
 		PatientDetailsDTO patientDetailsDTO = new PatientDetailsDTO();
+		if(patientDetails.getAddharNo() != null) {
 		patientDetailsDTO.setAddharNo(patientDetails.getAddharNo());
+		}
 		patientDetailsDTO.setAddress(patientDetails.getAddress());
 		patientDetailsDTO.setBloodGroup(patientDetails.getBloodGroup());
 		patientDetailsDTO.setContactNo(patientDetails.getContactNo());

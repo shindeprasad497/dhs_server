@@ -47,8 +47,10 @@ public class AppointmentService {
 	}
 
 	private Appointment customConvertToEntiry(AppointmentDTO appointmentDTO, Appointment appointment) {
-		appointment = appointment.toEntity(appointmentDTO);
 
+		appointment.setAppointmentStatus(appointmentDTO.getAppointmentStatus());
+		appointment.setAppointmentDate(appointmentDTO.getAppointmentDate());
+		
 		Optional<PatientDetails> patientDetails = patientDetailsRepo
 				.findById(appointmentDTO.getPatientDetails().getId());
 		if (patientDetails.isPresent()) {
@@ -102,5 +104,17 @@ public class AppointmentService {
 		return appointmentDTOs;
 
 	}
+
+	public List<AppointmentDTO> getAppointmentByDoctorId(Long id) {
+		// TODO Auto-generated method stub
+
+		List<AppointmentDTO> appointmentDTOs = new ArrayList<>();
+
+		List<Appointment> appointmentopt = appointmentRepo.findByDoctorId(id);
+		for (Appointment appointment : appointmentopt) {
+			appointmentDTOs.add(appointment.toDto(appointment));
+		}
+
+		return appointmentDTOs;	}
 
 }

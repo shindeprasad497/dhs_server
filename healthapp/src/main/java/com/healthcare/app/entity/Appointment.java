@@ -3,6 +3,7 @@ package com.healthcare.app.entity;
 import java.time.LocalDate;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,16 +13,17 @@ import javax.persistence.OneToOne;
 
 import com.healthcare.app.dto.AppointmentDTO;
 
+import ch.qos.logback.core.subst.Token.Type;
+
 @Entity
 public class Appointment {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 
-	@Enumerated
+	@Enumerated(EnumType.STRING)
 	private AppointmentStatus appointmentStatus;
 
-	
 	private LocalDate appointmentDate;
 
 	@OneToOne
@@ -79,7 +81,7 @@ public class Appointment {
 		return appointment;
 
 	}
-	
+
 	public Appointment toEntityNested(AppointmentDTO appointmentDTO) {
 		Appointment appointment = new Appointment();
 
@@ -89,27 +91,26 @@ public class Appointment {
 		// patient convert
 		appointment.setPatientDetails(patientDetails.toEntity(appointmentDTO.getPatientDetails()));
 
-		// doctor hospital convert	
+		// doctor hospital convert
 		appointment.setDoctor(doctor.toEntity(appointmentDTO.getDoctor()));
 		return appointment;
 
 	}
 
-
 	public AppointmentDTO toDto(Appointment appointment) {
 		AppointmentDTO appointmentDTO = new AppointmentDTO();
-//chnges
+		// chnges
 		appointmentDTO.setAppointmentDate(appointment.getAppointmentDate());
 		appointmentDTO.setAppointmentStatus(appointment.getAppointmentStatus());
 		appointmentDTO.setId(appointment.getId());
 
 		// patient convert
-		PatientDetails patientDetails=new PatientDetails();
+		PatientDetails patientDetails = new PatientDetails();
 		appointmentDTO.setPatientDetails(patientDetails.toDto(appointment.getPatientDetails()));
 
 		// doctor hospital convert
-		Doctor doctor=new Doctor();
-	appointmentDTO.setDoctor(doctor.toDto(appointment.getDoctor()));
+		Doctor doctor = new Doctor();
+		appointmentDTO.setDoctor(doctor.toDto(appointment.getDoctor()));
 		return appointmentDTO;
 
 	}
